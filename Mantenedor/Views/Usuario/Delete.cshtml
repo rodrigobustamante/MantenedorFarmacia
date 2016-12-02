@@ -1,0 +1,21 @@
+﻿@model Mantenedor.Models.Usuario
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="center">
+    <h3>Eliminar cuenta de trabajador @Html.DisplayFor(model => model.Nombre) @Html.DisplayFor(model => model.Apellido)</h3>
+    <h5>¿Seguro que desea eliminar la cuenta de este trabajador?</h5>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <br />
+            <input type="submit" value="Eliminar" class="btn btn-default red" /> 
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-default blue" })
+        </div>
+    }
+</div>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Mantenedor.Models.Categoria>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h3>Listado de categorias</h3>
+<a class="btn btn-default waves-effect waves-light orange right" href="/Categoria/Create">Agregar nueva categoría</a>
+<br />
+<br />
+<table id="listaCategorias" class="centered bordered striped">
+    <thead>
+        <tr>
+            <th class="center">
+                # <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Nombre de la categoría <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCategoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCategoria)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.IdCategoria })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

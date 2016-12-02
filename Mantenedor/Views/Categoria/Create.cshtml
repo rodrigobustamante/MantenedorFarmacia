@@ -1,0 +1,39 @@
+﻿@model Mantenedor.Models.Categoria
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h3>Agregar nueva categoría para los productos</h3>
+<hr style="opacity: 0.2" />
+<br />
+@using (Html.BeginForm("Create", "Categoria", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    if (@ViewBag.Message != null)
+    {
+        <div class="center red">
+            <h4 class="red-text">@ViewBag.Message</h4>
+        </div>
+    }
+    if (TempData["error"] != null)
+    {
+        <div class="card-panel center">
+            <h5 style="color: red;">@TempData["error"]</h5>
+        </div>
+    }
+    <div class="input-field col s12">
+        <label>Nombre de la categoría:</label>
+        @Html.EditorFor(model => model.NombreCategoria)
+    </div>
+    <div class="input-field col s12">
+        @Html.ValidationMessageFor(p => p.NombreCategoria, null, new { @style = "color: red" })
+    </div>
+    <div class="row">
+        <button type="submit" class="waves-effect waves-light btn orange col s12">Agregar categoría</button>
+    </div>
+}
+    <div class="row">
+        <a class="btn btn-success col s12 orange" href="/Categoria/Index">Volver</a>
+    </div>
+

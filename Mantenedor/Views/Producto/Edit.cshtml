@@ -1,0 +1,86 @@
+﻿@model Mantenedor.Models.Producto
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <h4>Modificación de producto con ID @Html.DisplayFor(model => model.IdProducto)</h4>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        if (@ViewBag.Message != null)
+        {
+            <div class="center red">
+                <h4 class="red-text">@ViewBag.Message</h4>
+            </div>
+        }
+        if (TempData["error"] != null)
+        {
+            <div class="card-panel center">
+                <h5 style="color: red;">@TempData["error"]</h5>
+            </div>
+        }
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label>Id del producto:</label>
+                    @Html.TextBoxFor(model => model.IdProducto, new { @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <label>Nombre del producto:</label>
+                    @Html.EditorFor(p => p.NombreProducto, new { required = "required" })
+                </div>
+                <div class="input-field col s6">
+                    <label>Stock total:</label>
+                    @Html.EditorFor(p => p.StockTotal, new { required = "required" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.NombreProducto, null, new { @style = "color: red" })
+                </div>
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.StockTotal, null, new { @style = "color: red" })
+                </div>
+            </div>
+            <hr style="opacity: 0.2;" />
+            <div class="row">
+                <div class="input-field col s6">
+                    <label>Stock disponible:</label>
+                    @Html.EditorFor(p => p.StockDisponible, new { required = "required" })
+                </div>
+                <div class="input-field col s6">
+                    <label>Precio:</label>
+                    @Html.EditorFor(p => p.Precio, new { required = "required" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.StockDisponible, null, new { @style = "color: red" })
+                </div>
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.Precio, null, new { @style = "color: red" })
+                </div>
+            </div>
+            <hr style="opacity: 0.2;" />
+            <div class="row">
+                <div class="input-field col s6">
+                    @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control" })
+                    <label>Categoría:</label>
+                </div>
+                <div class="input-field col s6">
+                    @Html.DropDownList("IdSucursal", null, htmlAttributes: new { @class = "form-control" })
+                    <label>Sucursal:</label>
+                </div>
+            </div>
+            <div class="row">
+                <input class="btn btn-success col s12 orange" type="submit" value="Modificar producto" />
+            </div>
+        </div>
+    }
+</div>

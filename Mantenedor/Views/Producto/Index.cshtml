@@ -1,0 +1,186 @@
+@model IEnumerable<Mantenedor.Models.Producto>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h3>Listado de productos</h3>
+<a class="btn btn-default waves-effect waves-light orange right" href="/Producto/Create">Agregar nuevo producto</a>
+<br />
+<br />
+<div id="tabla"></div>
+<table id="listaProductos" class="centered bordered striped">
+    <thead>
+        <tr>
+            <th class="center">
+                # <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Nombre del producto <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Stock Disponible (%)<i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Precio <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Bodega donde se encuentra <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                
+            </th>
+        </tr>
+    </thead>
+     <tbody>
+   
+    @foreach (var item in Model)
+    {
+            <tr>
+               <td>
+                    @Html.DisplayFor(modelItem => item.IdProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreProducto)
+                </td>
+                @if ((item.StockDisponible * 100) / item.StockTotal <= 25)
+                 {
+                    int x = (item.StockDisponible * 100) / item.StockTotal;
+                    x.ToString();
+                    <td><span style="color: red;">@x %</span></td>
+                }
+                else
+                {
+                    int x = (item.StockDisponible * 100) / item.StockTotal;
+                    x.ToString();
+                    <td>@x %</td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)
+                </td>
+                <td>
+                    @Html.ActionLink("Ver", "Show", new { id = item.IdProducto }) | @Html.ActionLink("Editar", "Edit", new { id = item.IdProducto }) | @Html.ActionLink("Eliminar", "Delete", new { id = item.IdProducto })
+                </td>
+            </tr>
+    }
+         </tbody>
+</table>
+<br />
+<span style="color:red;">* Si el % disponible esta en rojo, avisar a su supervisor</span>
+<script>
+    var uri = 'api/Producto';
+    var rows = new Array();
+    var producto;
+    $(document).ready(function () {
+        getAllItems()
+        //});
+        //function find() {
+        //    var id = $('#clienteId').val();
+        //    $.getJSON(uri + '/' + id)
+        //    .done(function (data) {
+        //        $('#editNombre').val(data.Nombre);
+        //    }).fail(function (jqXHR, textStatus, err) {
+        //        $('#cliente').text("error no se encuentra la persona");
+        //    })
+        //}
+        function getAllItems() {
+            var i = 0;
+            $.getJSON(uri)
+                .done(function (data) {
+                    $.each(data, function (key, item) {
+                        rows[i] = "row_" + item.IdProducto;
+                        $('<tr id="' + rows[i] + '">' +
+                                '<td>' + item.IdProducto + '</td>' +
+                                '<td>' + item.NombreProducto + '</td>' +
+                                '<td>' + item.ISucursal + '</td>'
+                                + '<td> <button id="edit_' + item.IdProducto + '" onclick="javascript:editItem(' + item.IdProducto + ')">Editar</button> <button id="delete_' + item.IdProducto + '" onclick="javascript:deleteItem(' + item.IdProducto + ')">Eliminar</button></td>' +
+                            '</tr>').appendTo($('#listaProductos>tbody'));
+                        i++;
+                    });
+                });
+        }
+        function guardarAddButton() {
+            cliente = new Object();
+            cliente.Nombre = $('#addNombres').val();
+            var clienteJSON = JSON.stringify(cliente);
+            alert('aca');
+            $.ajax({
+                url: uri,
+                type: 'POST',
+                data: clienteJSON,
+                contentType: "application/json;charset=utf-8",
+                //}).
+                //    done(function (response) {
+                //        deleteAllItems();
+                //        getAllItems();
+                //    });
+                success: function (response) {
+                    deleteAllItems();
+                    getAllItems();
+                },
+                error: function () {
+                    alert('Ha ocurrido un error, por favor re intente.');
+                }
+            });
+        }
+        function deleteAllItems() {
+            rows.forEach(function (item) {
+                $('#' + item).remove();
+            });
+        }
+        function guardarEditButton() {
+            cliente.Nombre = $('#editNombre').val();
+            var clienteJSON = JSON.stringify(cliente);
+            $.ajax({
+                url: uri + '/' + cliente.Id,
+                type: 'PUT',
+                data: clienteJSON,
+                contentType: "application/json;charset=utf-8"
+            }).
+                done(function (response) {
+                    deleteAllItems();
+                    getAllItems();
+                }).
+                fail(function (jqXHR, textStatus, err) {
+                    $('#cliente').text('Error, no se encuentra la persona');
+                });
+        }
+        /*
+            Se ocupa de las cabeceras de petición HTTP (tipos Modified-pasado, etag, Content-Type, MIME etc ...).
+            Se ocupa de las devoluciones de llamada de la solicitud (incluyendo devoluciones de llamada promesa .done (), .fail () etc ...)
+            Maneja cualquier prefiltros para la orden.
+            Maneja cualquier tiempos de espera establecidos para la solicitud.
+            Maneja todas las llamadas entre dominios (incluyendo jsonp).
+        */
+        function editItem(id) {
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    cliente = data;
+                    $('#editNombre').val(data.Nombre);
+                    $('#editNombre').attr('readonly', false);
+
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#cliente').text('Error, no se encuentra la persona');
+                });
+
+        }
+        function deleteItem(id) {
+            $.ajax({
+                url: uri + '/' + id,
+                type: 'DELETE',
+                contentType: 'application/json;charset=utf-8',
+                success: function (response) {
+                    deleteAllItems();
+                    getAllItems();
+                },
+                error: function (response) {
+                    alert('Ha ocurrido un error, por favor re intente.');
+                }
+            });
+        }
+    });
+</script>

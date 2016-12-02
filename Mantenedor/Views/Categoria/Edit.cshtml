@@ -1,0 +1,45 @@
+﻿@model Mantenedor.Models.Categoria
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <h4 class="center">Cambio de nombre de categoría</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        if (@ViewBag.Message != null)
+        {
+            <div class="center red">
+                <h4 class="red-text">@ViewBag.Message</h4>
+            </div>
+        }
+        if (TempData["error"] != null)
+        {
+            <div class="card-panel center">
+                <h5 style="color: red;">@TempData["error"]</h5>
+            </div>
+        }
+        <div class="row">
+            <div class="input-field col s12">
+                <label>Id de la categoría:</label>
+                @Html.TextBoxFor(model => model.IdCategoria, new { @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="input-field col s12">
+            <label>Nombre de la categoría:</label>
+            @Html.EditorFor(model => model.NombreCategoria)
+        </div>
+        <div class="input-field col s12">
+            @Html.ValidationMessageFor(p => p.NombreCategoria, null, new { @style = "color: red" })
+        </div>
+        <div class="row">
+            <input class="btn btn-success col s12 orange" type="submit" value="Guardar cambios" />
+        </div>
+    }
+    <div class="row">
+        <a class="btn btn-success col s12 orange" href="/Categoria/Index">Volver</a>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>@Page.Title</title>
+        <link href="~/CSS/Styles.css" rel="stylesheet" />
+        <link href="~/CSS/materialize.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+        @RenderSection("head", required: false)
+    </head>
+    <body>
+        <div>
+            <nav class="orange">
+                <div class="container">
+                    <ul id="slide-out" class="side-nav">
+                        @if (Session["correo"] != null) { 
+                            if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
+                            {
+                                <li><h3 class="center orange-text">Menú</h3></li>
+                                <li><a href="/Home/Welcome">Inicio</a></li>
+                                <li><div class="divider"></div></li>
+                                <li><a href="/Usuario/Index">Listado de trabajadores</a></li>
+                                <li><a href="/Usuario/Create">Agregar trabajador</a></li>
+                                <li><div class="divider"></div></li>
+                                <li><a href="/Producto/Index">Listado de productos</a></li>
+                                <li><a href="/Producto/Create">Agregar producto</a></li>
+                                <li><div class="divider"></div></li>
+                                <li><a href="/Categoria/Index">Listado de categorias</a></li>
+                                <li><a href="/Categoria/Create">Agregar categoría</a></li>
+                            }else{
+                                <li><h3 class="center orange-text">Menú</h3></li>
+                                <li><a href="/Home/Welcome">Inicio</a></li>
+                                <li><div class="divider"></div></li>
+                                <li><a href="/Producto/Index">Listado de productos</a></li>
+                                <li><a href="/Producto/Create">Agregar producto</a></li>
+                            }
+                        }
+                    </ul>
+                    @if (Session["correo"] != null) { 
+                        <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+                    }
+                    <a href="/Home/Welcome" style="font-size: 30px;">Farmacias Cruz Naranja</a>
+                    <div class="right">
+                        @if (Session["correo"] != null)
+                        {
+                            string x = Session["nombre"].ToString() + " " + Session["apellido"].ToString();
+                            <a style="font-size: 19px;" class='dropdown-button' href='#' data-activates='dropdown1'>@x<i class="material-icons right">arrow_drop_down</i></a>
+                            <ul id='dropdown1' class='dropdown-content'>
+                                <li>@Html.ActionLink("Cerrar Sesión", "Logout")</li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="main" class="container">
+            @RenderBody()
+        </div>
+        <footer class="page-footer orange">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <h5 class="white-text">Farmacias Cruz Naranja</h5>
+                        <p class="grey-text text-lighten-4">Sólo lo mejor para tu salud.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    <span class="white-text"> © 2016 Rodrigo Bustamante | Cristóbal Ceppi </span>
+                </div>
+            </div>
+        </footer>
+        <script src="~/JS/jquery.min.js"></script>
+        <script src="~/JS/jquery.validate.js"></script>
+        <script src="~/JS/jquery.validate.unobtrusive.js"></script>  
+        <script src="~/JS/materialize.min.js"></script>
+       
+        <script src="~/JS/jquery.tablesorter.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".dropdown-button").dropdown();
+                $('select').material_select();
+                $(".button-collapse").sideNav();
+                $("#listaCategorias").tablesorter();
+                $("#listaEmpleados").tablesorter();
+                $("#listaProductos").tablesorter();
+            });
+        </script>
+    </body>
+</html>

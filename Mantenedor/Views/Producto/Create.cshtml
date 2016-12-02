@@ -1,0 +1,79 @@
+﻿@model Mantenedor.Models.Producto
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <h4>Formularío de creación de producto</h4>
+    <hr />
+    @using (Html.BeginForm("Create", "Producto", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        if (@ViewBag.Message != null)
+        {
+            <div class="center red">
+                <h4 class="red-text">@ViewBag.Message</h4>
+            </div>
+        }
+        if (TempData["error"] != null)
+        {
+            <div class="card-panel center">
+                <h5 style="color: red;">@TempData["error"]</h5>
+            </div>
+        }
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <label>Nombre del producto:</label>
+                    @Html.TextBoxFor(p => p.NombreProducto, new { required = "required" })
+                </div>
+                <div class="input-field col s6">
+                    <label>Stock total:</label>
+                    @Html.TextBoxFor(p => p.StockTotal, new { required = "required" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.NombreProducto, null, new { @style = "color: red" })
+                </div>
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.StockTotal, null, new { @style = "color: red" })
+                </div>
+            </div>
+            <hr style="opacity: 0.2;" />
+            <div class="row">
+                <div class="input-field col s6">
+                    <label>Stock disponible:</label>
+                    @Html.TextBoxFor(p => p.StockDisponible, new { required = "required" })
+                </div>
+                <div class="input-field col s6">
+                    <label>Precio:</label>
+                    @Html.TextBoxFor(p => p.Precio, new { required = "required" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.StockDisponible, null, new { @style = "color: red" })
+                </div>
+                <div class="col s6">
+                    @Html.ValidationMessageFor(u => u.Precio, null, new { @style = "color: red" })
+                </div>
+            </div>
+            <hr style="opacity: 0.2;" />
+            <div class="row">
+                <div class="input-field col s6">
+                    @Html.DropDownList("IdCategoria", null, htmlAttributes: new { @class = "form-control" })
+                    <label>Categoría:</label>
+                </div>
+                <div class="input-field col s6">
+                    @Html.DropDownList("IdSucursal", null, htmlAttributes: new { @class = "form-control" })
+                    <label>Sucursal:</label>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="waves-effect waves-light btn orange col s12">Agregar producto</button>
+            </div>
+        </div>
+    }
+</div>

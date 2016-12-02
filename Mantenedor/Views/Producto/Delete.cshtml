@@ -1,0 +1,21 @@
+﻿@model Mantenedor.Models.Producto
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="center">
+    <h3>Eliminar producto con ID @Html.DisplayFor(model => model.IdProducto)</h3>
+    <h5>¿Seguro que desea eliminar este producto de la base de datos?</h5>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <br />
+            <input type="submit" value="Eliminar" class="btn btn-default red" />
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-default blue" })
+        </div>
+    }
+</div>

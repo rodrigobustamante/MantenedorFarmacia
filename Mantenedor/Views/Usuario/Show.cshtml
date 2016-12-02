@@ -1,0 +1,88 @@
+﻿@model Mantenedor.Models.Usuario
+@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Datos del empleado con ID @Html.DisplayFor(model => model.IdUsuario)</h2>
+
+<div>
+    <h4>Datos:</h4>
+    <hr />
+    <table class="centered bordered striped">
+        <tr>
+            <th class="center">
+                Nombre
+            </th>
+            <th class="center">
+                Apellido
+            </th>
+            <th class="center">
+                Correo
+            </th>
+            <th class="center">
+                Teléfono
+            </th>
+            <th class="center">
+                Dirección
+            </th>
+            <th class="center">
+                Cargo
+            </th>
+            <th class="center">
+                Comuna
+            </th>
+            <th class="center">
+                Ciudad
+            </th>
+            <th class="center">
+                Contrato
+            </th>
+            <th class="center">
+                Sucursal
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Cargo.NombreCargo)
+            </td>
+            <td>
+                @if (Model.Comuna.IdComuna == 0)
+                {
+                    @Html.Label("-")
+                }else{
+                    @Html.DisplayFor(model => model.Comuna.NombreComuna)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Ciudad.NombreCiudad)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Contrato.TipoContrato)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
+            </td>
+        </tr>
+    </table>
+    <br />
+    <span class="flow-text">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdUsuario }) |
+        @Html.ActionLink("Volver", "Index", new { @class = "btn-success" })
+    </span>
+</div>

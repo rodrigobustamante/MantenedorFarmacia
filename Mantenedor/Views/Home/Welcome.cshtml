@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<h4>Bienvenido 
+    @if (Session["correo"] != null){
+        string x = Session["nombre"].ToString() + " " + Session["apellido"].ToString();
+        @x
+    }
+</h4>
+<br />
+<div style="font-size:17px" class="card-panel">
+    @if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
+    {
+        <span>Desde esta página web usted podrá ingresar trabajadores, crear categorías de productos y también agregar productos.</span>
+        <p>Además, podrá eliminar y modificar usuarios y productos (Y modificar el nombre de la categoría).</p>
+        <p>-Farmacias Cruz Naranja</p>
+    }
+    else
+    {
+        <span>Desde esta página web, usted como trabajador podrá agregar productos, modificar su nombre, stock disponible, stock total, y el valor de estos.</span>
+        <p>También puede eliminar el producto si llega a ser necesario.</p>
+        <p>-Farmacias Cruz Naranja</p>
+    }
+</div>

@@ -1,0 +1,122 @@
+﻿@model Mantenedor.Models.Usuario
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <h4 class="center">Formularío de modificación de usuario</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        if (@ViewBag.Message != null)
+        {
+            <div class="center red">
+                <h4 class="red-text">@ViewBag.Message</h4>
+            </div>
+        }
+        if (TempData["error"] != null)
+        {
+            <div class="card-panel center">
+                <h5 style="color: red;">@TempData["error"]</h5>
+            </div>
+        }
+        <div class="row">
+            <div class="input-field col s12">
+                <label>Id del trabajador:</label>
+                @Html.TextBoxFor(model => model.IdUsuario, new { @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <label>Nombre del trabajador:</label>
+                @Html.EditorFor(model => model.Nombre)
+            </div>
+            <div class="input-field col s6">
+                <label>Apellido del trabajador:</label>
+                @Html.EditorFor(model => model.Apellido)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                @Html.ValidationMessageFor(u => u.Nombre, null, new { @style = "color: red" })
+            </div>
+            <div class="col s6">
+                @Html.ValidationMessageFor(u => u.Apellido, null, new { @style = "color: red" })
+            </div>
+        </div>
+        <hr style="opacity: 0.2" />
+        <div class="row">
+            <div class="input-field col s6">
+                <label>Correo del trabajador:</label>
+                @Html.EditorFor(model => model.Correo)
+            </div>
+            <div class="input-field col s6">
+                <label>Contraseña del trabajador:</label>
+                @Html.PasswordFor(model => model.Contrasena)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                @Html.ValidationMessageFor(u => u.Correo, null, new { @style = "color: red" })
+            </div>
+            <div class="col s6">
+                @Html.ValidationMessageFor(u => u.Contrasena, null, new { @style = "color: red" })
+            </div>
+        </div>
+        <hr style="opacity: 0.2" />
+        <div class="row">
+            <div class="input-field col s6">
+                <label>Teléfono del trabajador:</label>
+                @Html.EditorFor(model => model.Telefono)
+            </div>
+            <div class="input-field col s6">
+                <label>Dirección del trabajador:</label>
+                @Html.EditorFor(model => model.Direccion)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                @Html.ValidationMessageFor(u => u.Telefono, null, new { @style = "color: red" })
+            </div>
+            <div class="col s6">
+                @Html.ValidationMessageFor(u => u.Direccion, null, new { @style = "color: red" })
+            </div>
+        </div>
+        <hr style="opacity: 0.2" />
+        <div class="row">
+            <div class="input-field col s6">
+                @Html.DropDownList("IdCiudad", null, htmlAttributes: new { @class = "form-control" })
+                <label>Ciudad donde reside el trabajador:</label>    
+            </div>
+            <div class="input-field col s6">
+                @Html.DropDownList("IdComuna", null, htmlAttributes: new { @class = "form-control" })
+                <label>Comuna donde reside el trabajador:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                @Html.DropDownList("IdSucursal", null, htmlAttributes: new { @class = "form-control" })
+                <label>Sucursal donde trabaja el trabajador:</label>
+            </div>
+        <div class="input-field col s6">
+                @Html.DropDownList("IdCargo", null, htmlAttributes: new { @class = "form-control" })
+                <label>Cargo del trabajador:</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                @Html.DropDownList("IdContrato", null, htmlAttributes: new { @class = "form-control" })
+                <label>Tipo de contrato:</label>
+            </div>
+        </div>
+        <div class="row">
+            <input class="btn btn-success col s12 orange" type="submit" value="Guardar cambios" />
+        </div>
+}
+        <div class="row">
+            <a class="btn btn-success col s12 orange" href="/Usuario/Index">Volver</a>
+        </div>     
+</div>

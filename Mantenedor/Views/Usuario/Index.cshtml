@@ -1,0 +1,59 @@
+@model IEnumerable<Mantenedor.Models.Usuario>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h3>Listado de empleados</h3>
+<a class="btn btn-default waves-effect waves-light orange right" href="/Usuario/Create">Agregar nuevo trabajador</a>
+<br />
+<br />
+<table id="listaEmpleados" class="centered bordered striped">
+    <thead>
+        <tr>
+            <th class="center">
+                Nombre <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Apellido <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Cargo <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Contrato <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                Sucursal <i class="material-icons">arrow_drop_down</i>
+            </th>
+            <th class="center">
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cargo.NombreCargo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contrato.TipoContrato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sucursal.NombreSucursal)
+                </td>
+                <td>
+                    @Html.ActionLink("Ver", "Show", new { id = item.IdUsuario }) | @Html.ActionLink("Editar", "Edit", new { id = item.IdUsuario }) | @Html.ActionLink("Eliminar", "Delete", new { id = item.IdUsuario })
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>

@@ -1,0 +1,65 @@
+﻿@model Mantenedor.Models.Producto
+@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Datos del producto con ID @Html.DisplayFor(model => model.IdProducto)</h2>
+
+<div>
+    <h4>Datos:</h4>
+    <hr />
+    <table class="centered bordered striped">
+        <tr>
+            <th class="center">
+                ID
+            </th>
+            <th class="center">
+                Nombre del producto
+            </th>
+            <th class="center">
+                Stock Total
+            </th>
+            <th class="center">
+                Stock Disponible
+            </th>
+            <th class="center">
+                Precio
+            </th>
+            <th class="center">
+                Categoría
+            </th>
+            <th class="center">
+                Bodega donde se encuentra
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.IdProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.StockTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.StockDisponible)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Categoria.NombreCategoria)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Sucursal.NombreSucursal)
+            </td>
+        </tr>
+    </table>
+    <br />
+    <span class="flow-text">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdProducto }) |
+        @Html.ActionLink("Volver", "Index", new { @class = "btn-success" })
+    </span>
+</div>
